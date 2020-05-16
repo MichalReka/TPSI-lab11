@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Furka 4 u</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <p th:object="${carModel}">
+            Id auta: <span th:text="*{id}"></span>
+            <br/>
+            Nazwa auta: <span th:text="*{name}"></span>
+    </p>
+    <p th:object="${carManufacturer}">
+
+        Id producenta: <span th:text="*{id}"></span>
+        <br/>
+        Nazwa producenta: <span th:text="*{name}"></span>
+
+    </p>
+</body>
+</html>
