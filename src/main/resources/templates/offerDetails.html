@@ -41,9 +41,24 @@
             <th>Rodzaj paliwa:</th>
             <td th:text="*{fuelType.name}"></td>
         </tr>
+        <tr>
+            <th>Data dodania:</th>
+            <td th:text="*{dateTime}"></td>
+            <th></th>
+            <td></td>
+            <th></th>
+            <td></td>
+        </tr>
     </table>
     <div th:text="${offer.description}" class="well">
     </div>
+
+    <span th:if="${session.currentUser!=null}">
+        <div th:if="${session.currentUser.id==offer.userId}">
+            <a th:href="|/editoffer/${offer.id}|" class="btn btn-primary">Edytuj ogłoszenie</a>
+            <a th:href="|/deleteoffer/${offer.id}|" class="btn btn-danger">Usuń ogłoszenie</a>
+        </div>
+    </span>
 </section>
 </body>
 </html>

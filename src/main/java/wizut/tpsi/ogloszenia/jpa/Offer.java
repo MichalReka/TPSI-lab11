@@ -1,9 +1,13 @@
 package wizut.tpsi.ogloszenia.jpa;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 @Entity
 @Table(name = "offer")
 public class Offer {
@@ -12,50 +16,92 @@ public class Offer {
     @Column(name = "id")
     private Integer id;
 
-    @Size(max = 255)
+    @NotNull
+    @Size(max = 255, min = 5)
     @Column(name = "title")
     private String title;
 
+    @NotNull
+    @Min(1900)
     @Column(name = "year")
     private Integer year;
 
+    @NotNull
+    @Min(0)
     @Column(name = "mileage")
     private Integer mileage;
 
+    @Min(0)
     @Column(name = "engine_size")
     private BigDecimal engineSize;
 
+    @Min(0)
     @Column(name = "engine_power")
     private Integer enginePower;
 
+    @NotNull
+    @Min(1)
+    @Max(5)
     @Column(name = "doors")
     private Integer doors;
 
-    @Size(max = 30)
+    @NotNull
+    @Size(max = 30, min = 3)
     @Column(name = "colour")
     private String colour;
 
+    @NotNull
     @Lob
-    @Size(max = 65535)
+    @Size(max = 65535, min = 5)
     @Column(name = "description")
     private String description;
 
+    @NotNull
+    @Min(0)
     @Column(name = "price")
     private Integer price;
 
+    @NotNull
     @JoinColumn(name = "model_id", referencedColumnName = "id")
     @ManyToOne
     private CarModel model;
 
+    @NotNull
     @JoinColumn(name = "body_style_id", referencedColumnName = "id")
     @ManyToOne
     private BodyStyle bodyStyle;
 
+    @NotNull
     @JoinColumn(name = "fuel_type_id", referencedColumnName = "id")
     @ManyToOne
     private FuelType fuelType;
 
+    @NotNull
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name="add_date")
+    private LocalDate dateTime;
+
+
+
+    public LocalDate getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDate dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public Offer() {
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getId() {

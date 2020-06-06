@@ -7,8 +7,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
 </head>
 <body>
 <div class="container">
@@ -17,8 +18,16 @@
 
         <h1>Furka4U <small>Najlepsze furki w necie</small></h1>
         <h4>
-            <a href="/">Przeglądaj ogłoszenia</a> | <a href="/newoffer">Dodaj ogłoszenie</a>
+            <a href="/">Przeglądaj ogłoszenia</a> |
+            <a href="/login" th:if="${session.currentUser == null}">Zaloguj się</a>
+            <span th:if="${session.currentUser != null}">
+                <a href="/newoffer">Dodaj ogłoszenie</a> |
+                <a href="/logout">Wyloguj się</a>
+            </span>
         </h4>
+        <h5>
+            <div class="text=left" th:if="${session.currentUser != null}">Witaj <span th:text="${session.currentUser.username}"></span></div>
+        </h5>
     </div>
 
     <div layout:fragment="content">

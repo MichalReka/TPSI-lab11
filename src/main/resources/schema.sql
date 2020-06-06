@@ -44,6 +44,7 @@ create table offer (
 	description text,
         price integer,
 	user_id integer,
+	add_date date,
 	foreign key(model_id) references car_model(id),
 	foreign key(body_style_id) references body_style(id),
 	foreign key(fuel_type_id) references fuel_type(id),

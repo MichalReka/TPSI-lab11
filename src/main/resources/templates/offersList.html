@@ -4,21 +4,57 @@
       layout:decorator="layout">
 <head>
     <title>Lista ofert</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
 <section layout:fragment="content">
-    <table class="table">
+    <div id="offerFilter" class="panel panel-default">
+        <div class="panel-heading">Szukaj ofert</div>
+        <div class="panel-body">
+            <form id="offerFilterForm" action="" method="get" class="form-inline" th:object="${offerFilter}">
+                <select class="form-control" th:field="*{manufacturerId}">
+                    <option value="">Marka</option>
+                    <option th:each="manufacturer : ${carManufacturers}" th:value="${manufacturer.id}"
+                            th:text="${manufacturer.name}"></option>
+                </select>
+                <select class="form-control" th:field="*{modelId}">
+                    <option value="">Model</option>
+                </select>
+
+                <input type="submit" value="Filtruj" class="form-control"/>
+            </form>
+        </div>
+    </div>
+    <div id="offerSorter" class="panel panel-default">
+        <div class="panel-heading">Sortuj oferty</div>
+        <div class="panel-body">
+            <form id="offerSortForm" action="" method="get" class="form-inline" th:object="${offerSorter}">
+                <select class="form-control" th:field="*{sortOffer}">
+                    <option value="dateTime DESC">Od najnowszego</option>
+                    <option value="dateTime ASC">Od najstarszego</option>
+                    <option value="title ASC">A-Z</option>
+                    <option value="title DESC">Z-A</option>
+                    <option value="price DESC">Cena malejąco</option>
+                    <option value="price ASC">Cena rosnąco</option>
+                </select>
+                <input type="submit" value="Sortuj" class="form-control"/>
+            </form>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
         <tr>
             <th>Tytuł</th>
             <th>Marka</th>
             <th>Model</th>
             <th>Rocznik</th>
             <th>Cena</th>
+            <th>Data dodania</th>
             <th></th>
-
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="offer : ${offers}">
             <td th:text="${offer.title}"></td>
             <td th:text="${offer.model.manufacturer.name}"></td>
@@ -28,11 +64,30 @@
                 <span th:text="${#numbers.formatDecimal(offer.price, 0, 'WHITESPACE', 0,'COMMA')}"></span>
                 zł
             </td>
+            <td th:text="${offer.dateTime}"></td>
             <td><a th:href="|/offer/${offer.id}|">Pokaż</a></td>
 
         </tr>
-    </table>
+        </tbody>
 
+    </table>
+    <nav class="text-center">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${#strings.equals('1',currentPage)} ? 'disabled' : ''">
+                <span th:if="${#strings.equals('1',currentPage)}"><-</span>
+                <a th:unless="${#strings.equals('1',currentPage)}" class="page-link" th:href="${currentPage-1}"><-</a>
+            </li>
+            <li class="page-item" th:each="page: ${#numbers.sequence(1,pageCount)}"
+                th:classappend="${#strings.equals(page,currentPage)} ? 'active' : ''">
+                <a class="page-link" th:href="${page}" th:text="${page}"></a>
+            </li>
+            <li class="page-item" th:classappend="${#strings.equals(pageCount,currentPage)} ? 'disabled' : ''">
+                <span th:if="${#strings.equals(pageCount,currentPage)}">-></span>
+                <a th:unless="${#strings.equals(pageCount,currentPage)}" class="page-link"
+                   th:href="${currentPage+1}">-></a>
+            </li>
+        </ul>
+    </nav>
 </section>
 </body>
 </html>
