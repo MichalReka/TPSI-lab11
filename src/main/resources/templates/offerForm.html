@@ -15,6 +15,7 @@
             <label class="col-sm-2 control-label">Tytuł:</label>
             <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{title}')?'has-error':''}">
                 <input type="text" th:field="*{title}" class="form-control"/>
+                <label th:if="${#fields.hasErrors('*{year}')}" style="color: red;">Proszę podać tytuł (min. 5 znakow, maks. 255)</label>
             </div>
         </div>
         <div class="form-group">
@@ -22,12 +23,14 @@
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{year}')?'has-error':''}">
                     <input type="number" th:field="*{year}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{year}')}" style="color: red;">Proszę podać poprawny rok (min. 1900)</label>
                 </div>
             </div>
             <label class="col-sm-2 control-label">Przebieg:</label>
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{mileage}')?'has-error':''}">
                     <input type="number" th:field="*{mileage}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{mileage}')}" style="color: red;">Proszę podać poprawny przebieg</label>
                 </div>
             </div>
         </div>
@@ -36,11 +39,13 @@
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{engineSize}')?'has-error':''}">
                     <input type="number" th:field="*{engineSize}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{engineSize}')}" style="color: red;">Proszę podać właściwą wielkość silnika</label>
                 </div>
             </div>
             <label class="col-sm-2 control-label">Moc silnika:</label>
-            <div class="col-sm-4">
+            <div class="col-sm-4" th:classappend="${#fields.hasErrors('*{enginePower}')?'has-error':''}">
                 <input type="number" class="form-control" th:field="*{enginePower}"/>
+                <label th:if="${#fields.hasErrors('*{enginePower}')}" style="color: red;">Proszę podać właściwą moc silnika</label>
             </div>
         </div>
         <div class="form-group">
@@ -48,13 +53,17 @@
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{doors}')?'has-error':''}">
                     <input type="number" th:field="*{doors}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{doors}')}" style="color: red;">Proszę podać liczbe drzwi (min. 1, maks. 5)</label>
                 </div>
+
             </div>
             <label class="col-sm-2 control-label">Kolor:</label>
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{colour}')?'has-error':''}">
                     <input type="text" th:field="*{colour}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{colour}')}" style="color: red;">Proszę podać kolor (min. 3 znaki, maks. 30)</label>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
@@ -84,7 +93,9 @@
             <div class="col-sm-4">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{price}')?'has-error':''}">
                     <input type="number" th:field="*{price}" class="form-control"/>
+                    <label th:if="${#fields.hasErrors('*{doors}')}" style="color: red;">Proszę podać prawidłową cenę</label>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
@@ -92,7 +103,9 @@
             <div class="col-sm-10">
                 <div class="col-sm-10" th:classappend="${#fields.hasErrors('*{description}')?'has-error':''}">
                     <textarea class="form-control" rows="5" th:field="*{description}"></textarea>
+                    <label th:if="${#fields.hasErrors('*{description}')}" style="color: red;">Proszę podać opis (min.5 znakow, maks. 65535) </label>
                 </div>
+
             </div>
         </div>
         <div class="form-group">
