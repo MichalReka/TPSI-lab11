@@ -12,7 +12,6 @@ import org.springframework.web.context.annotation.SessionScope;
 import wizut.tpsi.ogloszenia.jpa.*;
 import wizut.tpsi.ogloszenia.services.OffersService;
 import wizut.tpsi.ogloszenia.web.OfferFilter;
-import wizut.tpsi.ogloszenia.web.OfferSorter;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,31 +25,23 @@ public class HomeController {
     @Autowired
     private OffersService offersService;
 
-    private int page;
     @RequestMapping("/")
-    public String home(Model model, OfferFilter offerFilter,OfferSorter offerSorter){
-        return "redirect:/offersList/1";
+    public String home(Model model, OfferFilter offerFilter){
+        return "redirect:/offersList";
     }
-    @GetMapping("/offersList/{page}")
-    public String offerList(Model model, OfferFilter offerFilter, OfferSorter offerSorter, @PathVariable("page") Integer page) {
+    @GetMapping("/offersList")
+    public String offerList(Model model, OfferFilter offerFilter) {
         List<CarManufacturer> carManufacturers = offersService.getCarManufacturers();
         List<CarModel> carModels = offersService.getCarModels();
         List<Offer> offers;
-        if(offerSorter.getSortOffer()!=null)
-        {
-            offersService.setSortOffer(offerSorter.getSortOffer());
-        }
         if(offerFilter.getManufacturerId()!=null) {
-            offers = offersService.getOffersByManufacturer(offerFilter.getManufacturerId(),page);
+            offers = offersService.getOffersByManufacturer(offerFilter.getManufacturerId());
         } else {
-            offers = offersService.getOffers(page);
+            offers = offersService.getOffers();
         }
-        int pageCount=offersService.getNumberOfPages();
-        model.addAttribute("pageCount", pageCount);
         model.addAttribute("carManufacturers", carManufacturers);
         model.addAttribute("carModels", carModels);
         model.addAttribute("offers", offers);
-        model.addAttribute("currentPage",page);
         return "offersList";
     }
     @GetMapping("/offer/{id}")
@@ -144,7 +135,6 @@ public class HomeController {
 
             return "offerForm";
         }
-        offer.setDateTime(LocalDate.now());
         offersService.saveOffer(offer);
         return "redirect:/offer/" + offer.getId();
     }

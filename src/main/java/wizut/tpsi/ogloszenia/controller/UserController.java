@@ -30,7 +30,7 @@ public class UserController {
     public String logout(HttpSession session){
         currentUser=null;
         session.removeAttribute("currentUser");
-        return "redirect:/offersList/1";
+        return "redirect:/offersList";
     }
     @PostMapping("/login")
     public String userLogin(Model model, User user, HttpSession session) throws SQLException {
@@ -38,7 +38,7 @@ public class UserController {
         if(currentUser!=null)
         {
             session.setAttribute("currentUser",currentUser);
-            return "redirect:/offersList/1";
+            return "redirect:/offersList";
         }
         return "loginForm";
     }
